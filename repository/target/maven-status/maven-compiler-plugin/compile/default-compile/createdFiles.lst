@@ -1,0 +1,6 @@
+com/studyport/persistence/query/RowMapper.class
+com/studyport/persistence/query/FinderQuery.class
+com/studyport/persistence/query/BaseQuery.class
+com/studyport/persistence/exception/RepositoryException.class
+com/studyport/persistence/FinderRepository.class
+com/studyport/persistence/CUDRepository.class
