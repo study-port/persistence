@@ -52,16 +52,12 @@ public class SqlRepositoryImpl implements SqlRepository {
 
     @Override
     public <R, T extends FinderQuery<R, ResultSet>> List<R> find(T query) throws RepositoryException{
-        List<R> result = new ArrayList<>();
-        try(ResultSet resultSet = queryExecutor.executeQuery(query.getQuery(), query.getParams())){
-            while (resultSet.next()){
-                result.add(query.getRowMapper().mapTo(resultSet));
-            }
+        try{
+            return this.queryExecutor.executeQuery(query.getQuery(), query.getParams(), query.getRowMapper());
         }catch (SQLException e){
             throw new RepositoryException(e, "DATABASE_ERROR", "Error in fetching data : "+ query.toString());
         }catch (Exception e){
             throw new RepositoryException(e, "DATABASE_ERROR", e.getMessage());
         }
-        return result;
     }
 }

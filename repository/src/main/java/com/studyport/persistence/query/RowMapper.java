@@ -2,6 +2,6 @@ package com.studyport.persistence.query;
 
 public interface RowMapper<T, R> {
 
-    R mapTo(T row);
+    R mapTo(T row) throws Throwable;
 
 }

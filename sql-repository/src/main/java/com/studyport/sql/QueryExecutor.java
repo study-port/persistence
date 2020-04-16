@@ -1,5 +1,7 @@
 package com.studyport.sql;
 
+import com.studyport.persistence.query.RowMapper;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -10,5 +12,5 @@ public interface QueryExecutor {
 
     int executeUpdateQuery(String query, List params) throws SQLException;
 
-    ResultSet executeQuery(String query, List params) throws SQLException;
+    <R> List<R> executeQuery(final String query, final List params, final RowMapper<ResultSet, R> rowMapper) throws SQLException;
 }

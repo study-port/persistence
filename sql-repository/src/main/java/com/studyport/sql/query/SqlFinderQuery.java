@@ -5,23 +5,30 @@ import com.studyport.persistence.query.RowMapper;
 import lombok.ToString;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 
 @ToString
 public class SqlFinderQuery<R> extends SqlQuery implements FinderQuery<R, ResultSet> {
 
-    private RowMapper<ResultSet, R> mapper;
+    private final SqlRowMapper<R> mapper;
 
-    SqlFinderQuery(String query) {
-        super(query);
+    public static SqlFinderQuery<Map<String, Object>> of(String query){
+        return new SqlFinderQuery<Map<String, Object>>(query, new ColumnMapRowMapper());
     }
 
-    SqlFinderQuery(String query, List params) {
-        super(query, params);
+    public static <R> SqlFinderQuery<R> of(String query, SqlRowMapper<R> rowMapper){
+        return new SqlFinderQuery<R>(query, rowMapper);
     }
 
-    SqlFinderQuery(String query, List params, RowMapper<ResultSet, R> mapper){
+    SqlFinderQuery(String query, SqlRowMapper<R> mapper) {
+        this(query, null, mapper);
+    }
+
+
+    SqlFinderQuery(String query, List params, SqlRowMapper<R> mapper){
         super(query, params);
         this.mapper = mapper;
     }
